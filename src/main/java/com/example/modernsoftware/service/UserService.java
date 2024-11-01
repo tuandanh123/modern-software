@@ -4,6 +4,8 @@ import com.example.modernsoftware.dto.request.UserCreationRequest;
 import com.example.modernsoftware.dto.request.UserUpdateRequest;
 import com.example.modernsoftware.dto.response.UserResponse;
 import com.example.modernsoftware.entity.User;
+import com.example.modernsoftware.exception.AppException;
+import com.example.modernsoftware.exception.ErrorCode;
 import com.example.modernsoftware.mapper.UserMapper;
 import com.example.modernsoftware.repository.UserRepository;
 import lombok.AccessLevel;
@@ -22,7 +24,7 @@ public class UserService {
 
     public UserResponse createUser(UserCreationRequest userCreationRequest){
         if(userRepository.existsById(userCreationRequest.getUsername())){
-            throw new RuntimeException("User existed");
+            throw new AppException(ErrorCode.USER_EXISTED);
         }
 
         User user = userRepository.save(userMapper.toUser(userCreationRequest));
@@ -32,7 +34,7 @@ public class UserService {
 
     public UserResponse getUser(String id){
         User user = userRepository.findById(id).orElseThrow(
-                () -> new RuntimeException("User not found")
+                () -> new AppException(ErrorCode.USER_NOT_FOUND)
         );
 
         return userMapper.toUserResponse(user);
@@ -45,7 +47,7 @@ public class UserService {
 
     public UserResponse updateUser(String id, UserUpdateRequest userUpdateRequest){
         User user = userRepository.findById(id).orElseThrow(
-                () -> new RuntimeException("User not found")
+                () -> new AppException(ErrorCode.USER_NOT_FOUND)
         );
 
         userMapper.updateUser(user, userUpdateRequest);
