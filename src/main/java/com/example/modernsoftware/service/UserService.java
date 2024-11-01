@@ -21,8 +21,8 @@ public class UserService {
     UserMapper userMapper;
 
     public UserResponse createUser(UserCreationRequest userCreationRequest){
-        if(!userRepository.existsById(userCreationRequest.getUsername())){
-            throw new RuntimeException("User not found");
+        if(userRepository.existsById(userCreationRequest.getUsername())){
+            throw new RuntimeException("User existed");
         }
 
         User user = userRepository.save(userMapper.toUser(userCreationRequest));
