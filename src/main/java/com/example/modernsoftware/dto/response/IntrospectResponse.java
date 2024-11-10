@@ -3,13 +3,12 @@ package com.example.modernsoftware.dto.response;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
-@Builder
-@Getter
 @Setter
+@Getter
 @AllArgsConstructor
+@Builder
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class AuthenticationResponse {
-    String token;
-    boolean authenticated;
-
+@NoArgsConstructor
+public class IntrospectResponse {
+    boolean valid;
 }

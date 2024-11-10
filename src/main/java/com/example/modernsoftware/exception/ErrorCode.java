@@ -9,6 +9,8 @@ import lombok.experimental.FieldDefaults;
 @AllArgsConstructor
 @Getter
 public enum ErrorCode {
+    UNAUTHORIZED(1010, "Unauthorized"),
+    JOSEEE_EXCEPTION(1009, "JOSEEE_EXCEPTION"),
     INVALID_KEY(1008, "Invalid key"),
     INVALID_USERNAME(1001,"Invalid username"),
     INVALID_PASSWORD(1002,"Invalid password"),

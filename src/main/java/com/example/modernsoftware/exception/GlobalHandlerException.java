@@ -1,6 +1,7 @@
 package com.example.modernsoftware.exception;
 
 import com.example.modernsoftware.dto.ApiResponse;
+import com.nimbusds.jose.JOSEException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -12,7 +13,7 @@ public class GlobalHandlerException {
     ResponseEntity<ApiResponse> handlingRuntimeException(final RuntimeException e) {
         ApiResponse apiResponse = ApiResponse.builder()
                 .code(ErrorCode.UNCATEGORIZED_ERROR.getCode())
-                .message(ErrorCode.UNCATEGORIZED_ERROR.getMessage())
+                .message(e.getMessage())
                 .build();
 
         return ResponseEntity.badRequest().body(apiResponse);
@@ -46,6 +47,16 @@ public class GlobalHandlerException {
         ApiResponse apiResponse = ApiResponse.builder()
                 .code(errorCode.getCode())
                 .message(errorCode.getMessage())
+                .build();
+
+        return ResponseEntity.badRequest().body(apiResponse);
+    }
+
+    @ExceptionHandler(JOSEException.class)
+    ResponseEntity<ApiResponse> handlingJoseException(final JOSEException joseException) {
+        ApiResponse apiResponse = ApiResponse.builder()
+                .code(ErrorCode.JOSEEE_EXCEPTION.getCode())
+                .message(ErrorCode.JOSEEE_EXCEPTION.getMessage())
                 .build();
 
         return ResponseEntity.badRequest().body(apiResponse);
