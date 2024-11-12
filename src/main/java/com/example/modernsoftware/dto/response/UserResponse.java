@@ -4,6 +4,7 @@ import lombok.*;
 import lombok.experimental.FieldDefaults;
 
 import java.time.LocalDate;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -16,4 +17,5 @@ public class UserResponse {
     String firstName;
     String lastName;
     LocalDate dbo;
+    Set<String> roles;
 }

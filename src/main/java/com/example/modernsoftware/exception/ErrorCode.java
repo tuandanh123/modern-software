@@ -4,24 +4,27 @@ import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.experimental.FieldDefaults;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
 
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 @AllArgsConstructor
 @Getter
 public enum ErrorCode {
-    UNAUTHORIZED(1010, "Unauthorized"),
-    JOSEEE_EXCEPTION(1009, "JOSEEE_EXCEPTION"),
-    INVALID_KEY(1008, "Invalid key"),
-    INVALID_USERNAME(1001,"Invalid username"),
-    INVALID_PASSWORD(1002,"Invalid password"),
-    INVALID_EMAIL(1003,"Invalid email"),
-    INVALID_FIRST_NAME(1004,"Invalid first name"),
-    INVALID_LAST_NAME(1005,"Invalid last name"),
-    UNCATEGORIZED_ERROR(9999, "Uncategorized error"),
-    USER_EXISTED(1006, "User already exists"),
-    USER_NOT_FOUND(1007, "User not found"),
+    UNAUTHORIZED(1010, "Unauthorized", HttpStatus.UNAUTHORIZED),
+    JOSEEE_EXCEPTION(1009, "JOSEEE_EXCEPTION", HttpStatus.INTERNAL_SERVER_ERROR),
+    INVALID_KEY(1008, "Invalid key", HttpStatus.BAD_REQUEST),
+    INVALID_USERNAME(1001,"Invalid username", HttpStatus.BAD_REQUEST),
+    INVALID_PASSWORD(1002,"Invalid password", HttpStatus.BAD_REQUEST),
+    INVALID_EMAIL(1003,"Invalid email", HttpStatus.BAD_REQUEST),
+    INVALID_FIRST_NAME(1004,"Invalid first name", HttpStatus.BAD_REQUEST),
+    INVALID_LAST_NAME(1005,"Invalid last name", HttpStatus.BAD_REQUEST),
+    UNCATEGORIZED_ERROR(9999, "Uncategorized error", HttpStatus.INTERNAL_SERVER_ERROR),
+    USER_EXISTED(1006, "User already exists", HttpStatus.BAD_REQUEST),
+    USER_NOT_FOUND(1007, "User not found", HttpStatus.BAD_REQUEST),
     ;
     int code;
     String message;
+    HttpStatusCode statusCode;
 
 }
