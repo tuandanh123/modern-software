@@ -11,12 +11,13 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 public class GlobalHandlerException {
     @ExceptionHandler(RuntimeException.class)
     ResponseEntity<ApiResponse> handlingRuntimeException(final RuntimeException e) {
+        ErrorCode errorCode = ErrorCode.UNCATEGORIZED_ERROR;
         ApiResponse apiResponse = ApiResponse.builder()
-                .code(ErrorCode.UNCATEGORIZED_ERROR.getCode())
-                .message(e.getMessage())
+                .code(errorCode.getCode())
+                .message(errorCode.getMessage())
                 .build();
 
-        return ResponseEntity.badRequest().body(apiResponse);
+        return ResponseEntity.status(errorCode.getStatusCode()).body(apiResponse);
     }
 
     @ExceptionHandler(AppException.class)
@@ -28,7 +29,7 @@ public class GlobalHandlerException {
                 .message(errorCode.getMessage())
                 .build();
 
-        return ResponseEntity.badRequest().body(apiResponse);
+        return ResponseEntity.status(errorCode.getStatusCode()).body(apiResponse);
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
@@ -49,16 +50,17 @@ public class GlobalHandlerException {
                 .message(errorCode.getMessage())
                 .build();
 
-        return ResponseEntity.badRequest().body(apiResponse);
+        return ResponseEntity.status(errorCode.getStatusCode()).body(apiResponse);
     }
 
     @ExceptionHandler(JOSEException.class)
     ResponseEntity<ApiResponse> handlingJoseException(final JOSEException joseException) {
+        ErrorCode errorCode = ErrorCode.JOSEEE_EXCEPTION;
         ApiResponse apiResponse = ApiResponse.builder()
-                .code(ErrorCode.JOSEEE_EXCEPTION.getCode())
-                .message(ErrorCode.JOSEEE_EXCEPTION.getMessage())
+                .code(errorCode.getCode())
+                .message(errorCode.getMessage())
                 .build();
 
-        return ResponseEntity.badRequest().body(apiResponse);
+        return ResponseEntity.status(errorCode.getStatusCode()).body(apiResponse);
     }
 }
