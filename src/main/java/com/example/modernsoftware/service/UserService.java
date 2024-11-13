@@ -4,10 +4,12 @@ import com.example.modernsoftware.dto.request.UserCreationRequest;
 import com.example.modernsoftware.dto.request.UserUpdateRequest;
 import com.example.modernsoftware.dto.response.UserResponse;
 import com.example.modernsoftware.entity.User;
-import com.example.modernsoftware.enums.Role;
+import com.example.modernsoftware.entity.Role;
+//import com.example.modernsoftware.enums.Role;
 import com.example.modernsoftware.exception.AppException;
 import com.example.modernsoftware.exception.ErrorCode;
 import com.example.modernsoftware.mapper.UserMapper;
+import com.example.modernsoftware.repository.RoleRepository;
 import com.example.modernsoftware.repository.UserRepository;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
@@ -28,6 +30,7 @@ import java.util.List;
 public class UserService {
     UserRepository userRepository;
     UserMapper userMapper;
+    RoleRepository roleRepository;
     PasswordEncoder passwordEncoder = new BCryptPasswordEncoder(10);
 
     public UserResponse createUser(UserCreationRequest userCreationRequest){
@@ -39,11 +42,14 @@ public class UserService {
 
         String password = passwordEncoder.encode(user.getPassword());
         user.setPassword(password);
-        HashSet<String> roles = new HashSet<>();
-        roles.add(Role.USER.name());
-        user.setRoles(roles);
 
-        return userMapper.toUserResponse(user);
+//        HashSet<Role> roles = new HashSet<>();
+//        Role role = new Role();
+//        role.setName("USER");
+//        roles.add(role);
+//        user.setRoles(roles);
+
+        return userMapper.toUserResponse(userRepository.save(user));
     }
 
     @PostAuthorize("returnObject.username == authentication.name")
@@ -70,6 +76,11 @@ public class UserService {
         String password = passwordEncoder.encode(userUpdateRequest.getPassword());
         user.setPassword(password);
 
+        var roles = roleRepository.findAllById(userUpdateRequest.getRoles());
+        user.setRoles(new HashSet<>(roles));
+
+        user = userRepository.save(user);
+
         return userMapper.toUserResponse(user);
     }
 
@@ -78,7 +89,7 @@ public class UserService {
         var authentication = context.getAuthentication();
         String username = authentication.getName();
 
-        User user = userRepository.findById(username).orElseThrow(
+        User user = userRepository.findByUsername(username).orElseThrow(
                 () -> new AppException(ErrorCode.USER_NOT_FOUND)
         );
 

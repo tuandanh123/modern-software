@@ -23,6 +23,6 @@ public class User {
     String firstName;
     String lastName;
     LocalDate dbo;
-    @ElementCollection
-    Set<String> roles;
+    @ManyToMany
+    Set<Role> roles;
 }

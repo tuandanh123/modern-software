@@ -5,6 +5,7 @@ import lombok.*;
 import lombok.experimental.FieldDefaults;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Getter
 @Setter
@@ -20,4 +21,5 @@ public class UserUpdateRequest {
     @Size(min = 2, max = 50, message = "INVALID_LASTNAME")
     String lastName;
     LocalDate dbo;
+    List<String> roles;
 }
