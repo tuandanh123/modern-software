@@ -37,7 +37,7 @@ public class UserController {
     public ApiResponse<List<UserResponse>> getUsers() {
         var authentication = SecurityContextHolder.getContext().getAuthentication();
         log.info("Username : {}", authentication.getName());
-        authentication.getAuthorities().forEach(g -> log.info("Role : {}", g.getAuthority()));
+        authentication.getAuthorities().forEach(grantedAuthority -> log.info("Role : {}", grantedAuthority.getAuthority()));
         List<UserResponse> userResponseList = userService.getAllUsers();
 
         return ApiResponse.<List<UserResponse>>builder()
