@@ -32,7 +32,7 @@ public class SecurityConfig {
 
     private final  String[] PUBLIC_ENDPOINTS ={"/users",
             "/auth/token", "/auth/introspect",
-            "/auth/logout"
+            "/auth/logout", "/auth/refresh"
     };
 
     private final String[] PUBLIC_SWAGGER_ENDPOINTS = {
