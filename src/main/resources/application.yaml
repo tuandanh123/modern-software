@@ -15,3 +15,8 @@ spring:
 
 jwt:
   signerKey: "7jGxIKHZJe7kA25f8inLCzhYFvt5kN1BIQHNiI4EF8GocT7AGu3oRa/EcQkRR3UF"
+
+tuandanh:
+  openapi:
+    dev-url: http://localhost:8080
+    prod-url: https://.....
