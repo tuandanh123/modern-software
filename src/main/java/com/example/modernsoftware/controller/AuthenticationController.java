@@ -3,6 +3,7 @@ package com.example.modernsoftware.controller;
 import com.example.modernsoftware.dto.ApiResponse;
 import com.example.modernsoftware.dto.request.AuthenticateRequest;
 import com.example.modernsoftware.dto.request.IntrospectRequest;
+import com.example.modernsoftware.dto.request.LogoutRequest;
 import com.example.modernsoftware.dto.response.AuthenticationResponse;
 import com.example.modernsoftware.dto.response.IntrospectResponse;
 import com.example.modernsoftware.service.AuthenticationService;
@@ -40,6 +41,14 @@ public class AuthenticationController {
 
         return ApiResponse.<IntrospectResponse>builder()
                 .result(introspectResponse)
+                .build();
+    }
+
+    @PostMapping("/logout")
+    public ApiResponse<Void> logout(@RequestBody LogoutRequest logoutRequest) throws ParseException, JOSEException {
+        authenticationService.logout(logoutRequest);
+
+        return ApiResponse.<Void>builder()
                 .build();
     }
 }
