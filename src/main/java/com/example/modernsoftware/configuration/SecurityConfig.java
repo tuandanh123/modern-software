@@ -1,7 +1,5 @@
 package com.example.modernsoftware.configuration;
 
-import com.example.modernsoftware.enums.Role;
-import lombok.experimental.NonFinal;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -27,14 +25,21 @@ import javax.crypto.spec.SecretKeySpec;
 public class SecurityConfig {
     @Value("${jwt.signerKey}")
     private String SIGNER_KEY;
-    private final String[] PUBLIC_ENDPOINTS ={"/users",
-            "/auth/token", "/auth/introspect"
+    private final  String[] PUBLIC_ENDPOINTS ={"/users",
+            "/auth/token", "/auth/introspect",
+    };
+
+    private final String[] PUBLIC_SWAGGER_ENDPOINTS = {
+            "/swagger-resources/**", "/swagger-ui/**",
+            "/v3/api-docs/**", "/webjars/**",
+            "/swagger-ui.html"
     };
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
         httpSecurity.authorizeHttpRequests(request ->
                 request.requestMatchers(HttpMethod.POST, PUBLIC_ENDPOINTS).permitAll()
+                        .requestMatchers(PUBLIC_SWAGGER_ENDPOINTS).permitAll()
                         .anyRequest().authenticated());
 
         httpSecurity.oauth2ResourceServer(oauth2 ->
