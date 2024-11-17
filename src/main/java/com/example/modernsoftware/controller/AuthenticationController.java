@@ -4,6 +4,7 @@ import com.example.modernsoftware.dto.ApiResponse;
 import com.example.modernsoftware.dto.request.AuthenticateRequest;
 import com.example.modernsoftware.dto.request.IntrospectRequest;
 import com.example.modernsoftware.dto.request.LogoutRequest;
+import com.example.modernsoftware.dto.request.RefreshRequest;
 import com.example.modernsoftware.dto.response.AuthenticationResponse;
 import com.example.modernsoftware.dto.response.IntrospectResponse;
 import com.example.modernsoftware.service.AuthenticationService;
@@ -49,6 +50,16 @@ public class AuthenticationController {
         authenticationService.logout(logoutRequest);
 
         return ApiResponse.<Void>builder()
+                .build();
+    }
+
+    @PostMapping("/refresh")
+    public ApiResponse<AuthenticationResponse> refresh(@RequestBody RefreshRequest refreshRequest)
+            throws ParseException, JOSEException {
+        AuthenticationResponse authenticationResponse = authenticationService.refreshToken(refreshRequest);
+
+        return ApiResponse.<AuthenticationResponse>builder()
+                .result(authenticationResponse)
                 .build();
     }
 }
