@@ -31,10 +31,10 @@ public class UserService {
     UserRepository userRepository;
     UserMapper userMapper;
     RoleRepository roleRepository;
-    PasswordEncoder passwordEncoder = new BCryptPasswordEncoder(10);
+    PasswordEncoder passwordEncoder;
 
     public UserResponse createUser(UserCreationRequest userCreationRequest){
-        if(userRepository.existsById(userCreationRequest.getUsername())){
+        if(userRepository.existsByUsername(userCreationRequest.getUsername())){
             throw new AppException(ErrorCode.USER_EXISTED);
         }
 

@@ -18,5 +18,5 @@ jwt:
 
 tuandanh:
   openapi:
-    dev-url: http://localhost:8080
+    dev-url: http://localhost:8080/identity
     prod-url: https://.....

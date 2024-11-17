@@ -23,6 +23,7 @@ public enum ErrorCode {
     UNCATEGORIZED_ERROR(9999, "Uncategorized error", HttpStatus.INTERNAL_SERVER_ERROR),
     USER_EXISTED(1006, "User already exists", HttpStatus.BAD_REQUEST),
     USER_NOT_FOUND(1007, "User not found", HttpStatus.BAD_REQUEST),
+    INVALID_DOB(1012, "Your age must be at least {min}", HttpStatus.BAD_REQUEST),
     ;
     int code;
     String message;
