@@ -21,6 +21,7 @@ import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.test.context.TestPropertySource;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -29,6 +30,7 @@ import java.util.Set;
 @SpringBootTest
 @Slf4j
 @FieldDefaults(level = AccessLevel.PRIVATE)
+@TestPropertySource("/test.properties")
 public class UserServiceTest {
     @Autowired
     UserService userService;
