@@ -1,16 +1,18 @@
 package com.example.modernsoftware.controller;
 
+import java.util.List;
+
+import org.springframework.web.bind.annotation.*;
+
 import com.example.modernsoftware.dto.ApiResponse;
 import com.example.modernsoftware.dto.request.PermissionRequest;
 import com.example.modernsoftware.dto.response.PermissionResponse;
 import com.example.modernsoftware.service.PermissionService;
+
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/permissions")
@@ -42,8 +44,6 @@ public class PermissionController {
     public ApiResponse<String> deletePermission(@PathVariable String id) {
         permissionService.deletePermission(id);
 
-        return ApiResponse.<String>builder()
-                .result("permission deleted")
-                .build();
+        return ApiResponse.<String>builder().result("permission deleted").build();
     }
 }

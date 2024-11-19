@@ -1,10 +1,11 @@
 package com.example.modernsoftware.mapper;
 
+import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
+
 import com.example.modernsoftware.dto.request.RoleRequest;
 import com.example.modernsoftware.dto.response.RoleResponse;
 import com.example.modernsoftware.entity.Role;
-import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
 
 @Mapper(componentModel = "spring")
 public interface RoleMapper {

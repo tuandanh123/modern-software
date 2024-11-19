@@ -1,16 +1,18 @@
 package com.example.modernsoftware.controller;
 
+import java.util.List;
+
+import org.springframework.web.bind.annotation.*;
+
 import com.example.modernsoftware.dto.ApiResponse;
 import com.example.modernsoftware.dto.request.RoleRequest;
 import com.example.modernsoftware.dto.response.RoleResponse;
 import com.example.modernsoftware.service.RoleService;
+
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/roles")
@@ -24,9 +26,7 @@ public class RoleController {
     public ApiResponse<RoleResponse> createRole(@RequestBody RoleRequest roleRequest) {
         RoleResponse roleResponse = roleService.createRole(roleRequest);
 
-        return ApiResponse.<RoleResponse>builder()
-                .result(roleResponse)
-                .build();
+        return ApiResponse.<RoleResponse>builder().result(roleResponse).build();
     }
 
     @GetMapping
@@ -39,11 +39,9 @@ public class RoleController {
     }
 
     @DeleteMapping("/{id}")
-    public ApiResponse<String> deleteRole(@PathVariable String id){
+    public ApiResponse<String> deleteRole(@PathVariable String id) {
         roleService.deleteRole(id);
 
-        return ApiResponse.<String>builder()
-                .result("role deleted")
-                .build();
+        return ApiResponse.<String>builder().result("role deleted").build();
     }
 }

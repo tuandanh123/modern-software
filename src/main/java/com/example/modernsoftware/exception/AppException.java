@@ -1,7 +1,6 @@
 package com.example.modernsoftware.exception;
 
 import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.experimental.FieldDefaults;
 
@@ -14,5 +13,4 @@ public class AppException extends RuntimeException {
     }
 
     ErrorCode errorCode;
-
 }

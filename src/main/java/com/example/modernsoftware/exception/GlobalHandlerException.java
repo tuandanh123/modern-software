@@ -1,18 +1,21 @@
 package com.example.modernsoftware.exception;
 
-import com.example.modernsoftware.dto.ApiResponse;
-import com.nimbusds.jose.JOSEException;
+import java.nio.file.AccessDeniedException;
+import java.util.Map;
+import java.util.Objects;
+
 import jakarta.validation.ConstraintViolation;
-import lombok.extern.slf4j.Slf4j;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authorization.AuthorizationDeniedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
-import java.nio.file.AccessDeniedException;
-import java.util.Map;
-import java.util.Objects;
+import com.example.modernsoftware.dto.ApiResponse;
+import com.nimbusds.jose.JOSEException;
+
+import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @ControllerAdvice
@@ -67,30 +70,32 @@ public class GlobalHandlerException {
     }
 
     @ExceptionHandler(value = MethodArgumentNotValidException.class)
-    ResponseEntity<ApiResponse> handlingMethodArgumentNotValidException(final MethodArgumentNotValidException exception) {
+    ResponseEntity<ApiResponse> handlingMethodArgumentNotValidException(
+            final MethodArgumentNotValidException exception) {
         String enumKey = Objects.requireNonNull(exception.getFieldError()).getDefaultMessage();
 
         ErrorCode errorCode = ErrorCode.INVALID_KEY;
         Map<String, Objects> attributes = null;
 
-        try{
+        try {
             errorCode = ErrorCode.valueOf(enumKey);
 
-            var constraintViolations = exception.getBindingResult().getAllErrors()
-                    .getFirst().unwrap(ConstraintViolation.class);
+            var constraintViolations =
+                    exception.getBindingResult().getAllErrors().getFirst().unwrap(ConstraintViolation.class);
 
             attributes = constraintViolations.getConstraintDescriptor().getAttributes();
 
             log.info(attributes.toString());
-        }
-        catch(IllegalArgumentException ignored){
+        } catch (IllegalArgumentException ignored) {
 
         }
 
         ApiResponse apiResponse = ApiResponse.builder()
                 .code(errorCode.getCode())
-                .message(Objects.nonNull(attributes) ? mapAttribute(errorCode.getMessage(), attributes)
-                        : errorCode.getMessage())
+                .message(
+                        Objects.nonNull(attributes)
+                                ? mapAttribute(errorCode.getMessage(), attributes)
+                                : errorCode.getMessage())
                 .build();
 
         return ResponseEntity.status(errorCode.getStatusCode()).body(apiResponse);

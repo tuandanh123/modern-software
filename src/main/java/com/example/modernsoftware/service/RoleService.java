@@ -1,19 +1,21 @@
 package com.example.modernsoftware.service;
 
+import java.util.HashSet;
+import java.util.List;
+
+import org.springframework.stereotype.Service;
+
 import com.example.modernsoftware.dto.request.RoleRequest;
 import com.example.modernsoftware.dto.response.RoleResponse;
 import com.example.modernsoftware.entity.Role;
 import com.example.modernsoftware.mapper.RoleMapper;
 import com.example.modernsoftware.repository.PermissionRepository;
 import com.example.modernsoftware.repository.RoleRepository;
+
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.stereotype.Service;
-
-import java.util.HashSet;
-import java.util.List;
 
 @Service
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
@@ -36,10 +38,11 @@ public class RoleService {
         return roleMapper.toRoleResponse(role);
     }
 
-    public List<RoleResponse> getAllRoles(){
-        return roleRepository.findAll().stream()
-                .map(roleMapper::toRoleResponse).toList();
+    public List<RoleResponse> getAllRoles() {
+        return roleRepository.findAll().stream().map(roleMapper::toRoleResponse).toList();
     }
 
-    public void deleteRole(String role){roleRepository.deleteById(role);}
+    public void deleteRole(String role) {
+        roleRepository.deleteById(role);
+    }
 }

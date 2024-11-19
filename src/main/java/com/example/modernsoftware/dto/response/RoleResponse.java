@@ -1,10 +1,9 @@
 package com.example.modernsoftware.dto.response;
 
-import com.example.modernsoftware.entity.Permission;
+import java.util.Set;
+
 import lombok.*;
 import lombok.experimental.FieldDefaults;
-
-import java.util.Set;
 
 @Data
 @AllArgsConstructor
