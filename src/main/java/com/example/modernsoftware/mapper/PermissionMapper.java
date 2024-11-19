@@ -1,9 +1,10 @@
 package com.example.modernsoftware.mapper;
 
+import org.mapstruct.Mapper;
+
 import com.example.modernsoftware.dto.request.PermissionRequest;
 import com.example.modernsoftware.dto.response.PermissionResponse;
 import com.example.modernsoftware.entity.Permission;
-import org.mapstruct.Mapper;
 
 @Mapper(componentModel = "spring")
 public interface PermissionMapper {
