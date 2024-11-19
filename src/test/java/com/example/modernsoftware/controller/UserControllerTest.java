@@ -20,6 +20,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
@@ -203,33 +204,25 @@ class UserControllerTest {
     }
 
     //---------------------------
-//    @Test
-//    void updateUser_validRequest_success() throws Exception {
-//        //GIVEN
-//        String content = objectMapper.writeValueAsString(userUpdateRequest);
-//        String mockJwtToken = "Bearer sample-valid-jwt-token";
-//
-//        Mockito.when(userService.updateUser(ArgumentMatchers.any(), ArgumentMatchers.any())).thenReturn(userResponse);
-//
-//        // Mock the CustomJwtDecoder to return a valid Jwt object
-//        Jwt mockJwt = Jwt.withTokenValue(mockJwtToken)
-//                .header("alg", "HS512")
-//                .claim("sub", "testUser")
-//                .claim("roles", List.of("ROLE_USER"))
-//                .build();
-//        Mockito.when(customJwtDecoder.decode(ArgumentMatchers.anyString())).thenReturn(mockJwt);
-//
-//        //WHEN,THEN
-//
-//        mockMvc.perform(MockMvcRequestBuilders
-//                        .put(USER_ENDPOINT)
-//                        .contentType(MediaType.APPLICATION_JSON_VALUE)
-//                        .content(content))
-//                .andExpect(MockMvcResultMatchers.status().isOk())
-//                .andExpect(MockMvcResultMatchers.jsonPath("code").value(1000))
-//                .andExpect(MockMvcResultMatchers.jsonPath("result.id").value("dkadkakda"));
-//
-//    }
+    @Test
+    @WithMockUser(username = "tuandanh")
+    void updateUser_validRequest_success() throws Exception {
+        //GIVEN
+        String content = objectMapper.writeValueAsString(userUpdateRequest);
+
+        Mockito.when(userService.updateUser(ArgumentMatchers.any(), ArgumentMatchers.any())).thenReturn(userResponse);
+
+        //WHEN,THEN
+
+        mockMvc.perform(MockMvcRequestBuilders
+                        .put("/users/" + userResponse.getId(), userResponse.getId())
+                        .contentType(MediaType.APPLICATION_JSON_VALUE)
+                        .content(content))
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.jsonPath("code").value(1000))
+                .andExpect(MockMvcResultMatchers.jsonPath("result.id").value("dkadkakda"));
+
+    }
 //
 //    @Test
 //    void updateUser_passwordInvalid_fail() throws Exception {
