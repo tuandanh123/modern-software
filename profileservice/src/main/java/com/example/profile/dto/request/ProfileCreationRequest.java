@@ -11,8 +11,9 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class ProfileCreationRequest {
+    String userid;
     String firstName;
     String lastName;
-    LocalDate dob;
+    LocalDate dbo;
     String city;
 }

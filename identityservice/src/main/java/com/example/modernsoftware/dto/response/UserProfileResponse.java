@@ -1,4 +1,5 @@
-package com.example.profile.dto.response;
+package com.example.modernsoftware.dto.response;
+
 
 import lombok.*;
 import lombok.experimental.FieldDefaults;
@@ -12,8 +13,9 @@ import java.time.LocalDate;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class UserProfileResponse {
     String id;
+    String userId;
     String firstName;
     String lastName;
-    LocalDate dbo;
+    LocalDate dob;
     String city;
 }

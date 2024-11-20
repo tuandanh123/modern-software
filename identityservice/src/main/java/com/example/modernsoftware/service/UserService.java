@@ -3,6 +3,11 @@ package com.example.modernsoftware.service;
 import java.util.HashSet;
 import java.util.List;
 
+import com.example.modernsoftware.dto.request.ProfileCreationRequest;
+import com.example.modernsoftware.dto.response.UserProfileResponse;
+import com.example.modernsoftware.mapper.ProfileMapper;
+import com.example.modernsoftware.repository.httpclient.ProfileClient;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.access.prepost.PostAuthorize;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -23,6 +28,7 @@ import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
@@ -31,6 +37,8 @@ public class UserService {
     UserMapper userMapper;
     RoleRepository roleRepository;
     PasswordEncoder passwordEncoder;
+    ProfileClient profileClient;
+    ProfileMapper profileMapper;
 
     public UserResponse createUser(UserCreationRequest userCreationRequest) {
         if (userRepository.existsByUsername(userCreationRequest.getUsername())) {
@@ -48,7 +56,15 @@ public class UserService {
         //        roles.add(role);
         //        user.setRoles(roles);
 
-        return userMapper.toUserResponse(userRepository.save(user));
+        user = userRepository.save(user);
+
+        var profileRequest = profileMapper.toProfileCreationRequest(userCreationRequest);
+        profileRequest.setUserId(user.getId());
+
+        UserProfileResponse profileResponse = profileClient.createProfile(profileRequest);
+
+        log.info(profileResponse.toString());
+        return userMapper.toUserResponse(user);
     }
 
     @PostAuthorize("returnObject.username == authentication.name")
