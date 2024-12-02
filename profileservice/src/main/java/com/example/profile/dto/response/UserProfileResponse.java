@@ -14,6 +14,6 @@ public class UserProfileResponse {
     String id;
     String firstName;
     String lastName;
-    LocalDate dob;
+    LocalDate dbo;
     String city;
 }

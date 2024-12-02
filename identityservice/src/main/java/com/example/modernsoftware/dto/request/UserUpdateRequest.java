@@ -30,4 +30,6 @@ public class UserUpdateRequest {
     LocalDate dbo;
 
     List<String> roles;
+
+    String city;
 }
